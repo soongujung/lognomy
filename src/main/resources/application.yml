@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: testdocker
+#    active: prod
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/querydsl
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true     # system.out 으로 콘솔에 출력된다. (추천하지 않는 옵션이다.)
+        # logging.level.org.hibernate.SQL을 debug로 두면 로거를 사용해 SQL이 출력된다.
+        # system.out 대신 logger를 쓰고 싶다면 spring.jpa.hibernate.properties.show_sql 은 사용하지 말자.
+        format_sql: true
+        use_sql_comments: true
+
+logging.level:
+  org.hibernate.SQL: debug
+# org.hibernate.type: trace
+---
+spring:
+  profiles: testdocker
+  datasource:
+    url: jdbc:mariadb://localhost:23307/lognomy
+    username: root
+    password: 1111
+    hikari:
+      auto-commit: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+logging.level:
+  org.hibernate.SQL: debug
+---
+spring:
+  profiles: prod
+  #  prod 의 datasource 는 프로젝트 최상단 connection-info.properties 에 지정했고, .gitignore 에 등록되어 있다.
+  #  datasource:
+  #    url: ${conn.rds.jdbcurl}
+  #    username: ${conn.rds.username}
+  #    password: ${conn.rds.password}
+  #    driver-class-name: ${conn.rds.driver-class-name}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        #        show_sql: true     # system.out 으로 콘솔에 출력된다. (추천하지 않는 옵션이다.)
+        # logging.level.org.hibernate.SQL을 debug로 두면 로거를 사용해 SQL이 출력된다.
+        # system.out 대신 logger를 쓰고 싶다면 spring.jpa.hibernate.properties.show_sql 은 사용하지 말자.
+        format_sql: true
+        use_sql_comments: true
+
+logging.level:
+  org.hibernate.SQL: debug
+# org.hibernate.type: trace
