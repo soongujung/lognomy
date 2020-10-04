@@ -4,6 +4,13 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+/application.properties
+/src/main/resources/connection.properties
+/src/main/resources/connection-info.yml
+/src/test/resources/connection-info.yml
 
 ### STS ###
 .apt_generated
