@@ -20,7 +20,7 @@ then
     docker container run --rm -d -p 23307:3306 --name lognomy-mariadb \
                 -v ~/env/docker/lognomy/volumes/lognomy-mariadb:/var/lib/mysql \
                 -e MYSQL_ROOT_PASSWORD=1111 \
-                -e MYSQL_DATABASE=ec2_web_stockdata \
+                -e MYSQL_DATABASE=lognomy \
                 -e MYSQL_USER=testuser \
                 -e MYSQL_PASSWORD=1111 \
                 -d mariadb:latest \
@@ -48,7 +48,7 @@ else
     docker container run --rm -d -p 23307:3306 --name lognomy-mariadb \
                 -v ~/env/docker/lognomy/volumes/lognomy-mariadb:/var/lib/mysql \
                 -e MYSQL_ROOT_PASSWORD=1111 \
-                -e MYSQL_DATABASE=ec2_web_stockdata \
+                -e MYSQL_DATABASE=lognomy \
                 -e MYSQL_USER=testuser \
                 -e MYSQL_PASSWORD=1111 \
                 -d mariadb:latest \
