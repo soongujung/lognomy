@@ -17,7 +17,7 @@ then
     fi
 
     # mariadb 컨테이너 구동 & 볼륨 마운트
-    docker container run --rm -d -p 23306:3306 --name lognomy-mariadb \
+    docker container run --rm -d -p 23307:3306 --name lognomy-mariadb \
                 -v ~/env/docker/lognomy/volumes/lognomy-mariadb:/var/lib/mysql \
                 -e MYSQL_ROOT_PASSWORD=1111 \
                 -e MYSQL_DATABASE=lognomy \
@@ -45,7 +45,7 @@ else
 
     # mariadb 컨테이너 구동 & 볼륨 마운트
     echo "'$name_lognomy_mysql' 컨테이너를 구동시킵니다."
-    docker container run --rm -d -p 23306:3306 --name lognomy-mariadb \
+    docker container run --rm -d -p 23307:3306 --name lognomy-mariadb \
                 -v ~/env/docker/lognomy/volumes/lognomy-mariadb:/var/lib/mysql \
                 -e MYSQL_ROOT_PASSWORD=1111 \
                 -e MYSQL_DATABASE=lognomy \
