@@ -5,5 +5,5 @@ import org.springframework.context.annotation.PropertySource
 
 @Configuration
 @PropertySource("classpath:/connection.properties")
-class PropertyConfig {
+class PropertySourceConfig {
 }

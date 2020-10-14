@@ -30,6 +30,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("com.querydsl:querydsl-jpa:4.2.1")
     implementation("org.mariadb.jdbc:mariadb-java-client:2.7.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch:2.3.4.RELEASE")
+
     kapt("com.querydsl:querydsl-apt:4.2.2:jpa")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
