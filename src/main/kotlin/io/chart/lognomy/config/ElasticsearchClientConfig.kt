@@ -23,7 +23,7 @@ import java.util.*
 
 //@EnableElasticsearchRepositories
 @Configuration
-class ElasticsearchClientConfiguration (
+class ElasticsearchClientConfig (
         @Value("\${conn.elasticsearch.host}") val host: String,
         @Value("\${conn.elasticsearch.port}") val port: String,
         @Value("\${conn.elasticsearch.cluster_name}") val clusterName: String,

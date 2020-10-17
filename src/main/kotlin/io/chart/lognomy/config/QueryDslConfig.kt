@@ -7,7 +7,7 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Configuration
-class QueryDslConfiguration (
+class QueryDslConfig (
         @PersistenceContext
         val entityManager: EntityManager ){
     @Bean

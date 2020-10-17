@@ -1,1 +1,1 @@
-rootProject.name = "lognomy"
+rootProject.name = "lognomy-api"
