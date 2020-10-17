@@ -10,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebMvcConfig : WebMvcConfigurer{
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:9090")    // vue.js running port
+                .allowedOrigins(
+                        "http://localhost:9090", // vue.js running port
+                        "http://localhost:3000"  // react running port
+                )
     }
 }
