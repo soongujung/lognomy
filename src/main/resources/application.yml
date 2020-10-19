@@ -1,7 +1,23 @@
 spring:
   profiles:
     active: testdocker
+
+# TODO : Resilience4j & Spring Cloud 설정
 #    active: prod
+#  cloud:
+#    loadbalancer:
+#      ribbon:
+#        enable: false
+# TODO
+#naver-news-search-client:
+#  ribbon:
+#    eureka:
+#      enabled: false
+#    listOfServers:
+#      localhost:8080
+#  application:
+#    name: lognomy-api
+
 ---
 spring:
   profiles: local
