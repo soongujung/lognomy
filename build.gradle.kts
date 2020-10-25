@@ -40,32 +40,27 @@ dependencies {
     implementation("io.github.openfeign:feign-jackson:11.0")
     implementation("io.github.openfeign:feign-slf4j:11.0")
     implementation("io.github.openfeign:feign-annotation-error-decoder:1.3.0")
-//    implementation("io.github.openfeign:feign-ribbon:11.0")
 
-    // -- openfeign in spring cloud (spring boot)
+    // -- resilience4j
+    // -- 참고) https://resilience4j.readme.io/docs/gradle
+    implementation("io.github.resilience4j:resilience4j-spring-boot2:1.6.1")
+    implementation("io.github.resilience4j:resilience4j-all:1.6.1")
+    implementation("io.github.resilience4j:resilience4j-feign:1.6.1")
+    // 아래 내용들은 resilience4j-all 의존성으로 모두 처리 (circuitbreaker, retry, ratelimiter)
+//    implementation("io.github.resilience4j:resilience4j-circuitbreaker:1.6.1")
+//    implementation("io.github.resilience4j:resilience4j-retry:1.6.1")
+//    implementation("io.github.resilience4j:resilience4j-ratelimiter:1.6.1")
+
+    // -- starter 에서 버전을 맞춰주거나 권장 자동설정으로 유도하는 feign 설정
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:2.2.5.RELEASE")
+
+    // -- starter 에서 버전을 맞춰주거나 권장 자동설정으로 유도하는 spring-cloud 관련 설정
     implementation("org.springframework.cloud:spring-cloud-starter-config:2.2.5.RELEASE")
 
-    /**
-     * spring cloud - TODO: loadbalancer, circuitBreaker 설정 필요
-     */
-//    No Feign Client for loadBalancing defined
-//    https://stackoverflow.com/questions/63702885/java-lang-illegalstateexception-no-feign-client-for-loadbalancing-defined-did
-//    공식 문서 (https://resilience4j.readme.io/docs/getting-started-3) 해보니 안된다. 그래서 한참 헤맸다.
-
-    // -- io.github.resilience4j
-//    implementation("io.github.resilience4j:resilience4j-feign:1.5.0")
-//    implementation("io.github.resilience4j:resilience4j-core:1.5.0")                  // 이걸 추가하게 되면 다른 모듈과 의존성이 꼬인다.
-//    implementation("io.github.resilience4j:resilience4j-circuitbreaker:1.5.0")        // 이걸 추가하게 되면 다른 모듈과 의존성이 꼬인다.
-//    implementation("io.github.resilience4j:resilience4j-retry:1.5.0")                 // 이걸 추가하게 되면 다른 모듈과 의존성이 꼬인다.
-
-//     TODO : Ribbon 설정 확인 필요
-     // -- spring-boot-starter
-//     https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-ribbon
-//    implementation("org.springframework.cloud:spring-cloud-starter-netflix-ribbon:2.2.5.RELEASE")
-
-     // -- spring cloud
-//    implementation("org.springframework.cloud:spring-cloud-loadbalancer:2.2.5.RELEASE")
+    // -- 직접 해보니... 아래 설정은 개발자가 직접 맞춰서 하는 것이 더 편하다.
+    // load balancing 관련 에러가 발생하고, ribbon 등등 혼동을 주는 에러문구들이 발생한다.
+    // spring-cloud-starter가 현재 프로젝트가 기본으로 netflix Feign 을 사용하는 것으로 오해를 하기 때문인것 같다.
+//    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:1.0.4.RELEASE")
 
     kapt("com.querydsl:querydsl-apt:4.2.2:jpa")
 

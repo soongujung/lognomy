@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: testdocker
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        enabled: false
 
 # TODO : Resilience4j & Spring Cloud 설정
 #    active: prod
