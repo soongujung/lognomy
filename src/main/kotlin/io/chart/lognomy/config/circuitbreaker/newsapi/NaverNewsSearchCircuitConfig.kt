@@ -1,18 +1,10 @@
 package io.chart.lognomy.config.circuitbreaker.newsapi
 
-//import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
-//import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
-//import io.github.resilience4j.feign.FeignDecorators
-//import io.github.resilience4j.feign.Resilience4jFeign
 import feign.Feign
-import feign.FeignException
 import feign.Logger
-import feign.Request
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
 import feign.slf4j.Slf4jLogger
-import io.chart.lognomy.newsapi.naver.NaverNewsItemDto
-import io.chart.lognomy.newsapi.naver.NaverNewsListDto
 import io.chart.lognomy.newsapi.naver.NaverNewsSearchClient
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
@@ -25,7 +17,6 @@ import io.github.resilience4j.ratelimiter.RateLimiterRegistry
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.lang.Exception
 import java.time.Duration
 
 @Configuration
@@ -33,7 +24,7 @@ class NaverNewsSearchCircuitConfig (
         @Value("\${conn.naver.news.baseUrl}")
         private val baseUrl : String
 ){
-//    feign client (단순 feign client) 설정
+    // CircuitBreaker 없이 단순 FeignClient 를 사용할 경우의 예
     @Bean
     fun naverNewsSearchClient() : NaverNewsSearchClient{
         return Feign.builder()
@@ -44,6 +35,7 @@ class NaverNewsSearchCircuitConfig (
                 .target(NaverNewsSearchClient::class.java, baseUrl)
     }
 
+    // 1) CircuitBreaker 인스턴스 생성 및 CircuitBreaker 설정
     fun circuitBreakerConfig() : CircuitBreakerConfig {
         val circuitBreakerConfig : CircuitBreakerConfig = CircuitBreakerConfig.custom()
                 .failureRateThreshold(50f)
@@ -56,8 +48,26 @@ class NaverNewsSearchCircuitConfig (
         return circuitBreakerConfig
     }
 
-    // CricuitBreakerRegistry 를 얻어오면서 circuitBreaker 의 생성과 획득을 동시에 하기
-    // 개별 Feign Client 에 Resilience4j 제공 CircuitBreaker 를 입히기
+    // 3) RateLimiter
+    // 참고자료 : https://resilience4j.readme.io/docs/ratelimiter
+    fun naverNewsSearchRateLimiter(): RateLimiter {
+
+        // ofDefaults를 사용하지 않고 커스텀 설정을 할 경우에 대한 예.
+        val rateLimiterConfig: RateLimiterConfig = RateLimiterConfig.custom()
+                .limitRefreshPeriod(Duration.ofMillis(1L))
+                .limitForPeriod(10)
+                .timeoutDuration(Duration.ofMillis(25L))
+                .build()
+
+        val rateLimiter: RateLimiter = RateLimiterRegistry.of(rateLimiterConfig)
+                .rateLimiter("naverNewsSearchRateLimiter", rateLimiterConfig)
+
+        return rateLimiter
+    }
+
+    // CircuitBreaker 인스턴스 생성, RateLimiter 인스턴스 생성 로직들을 결합하고
+    // Feign 라이브러리를 Resilience4J 구현체에 결합해서 CirucuitBreakker, RateLimiter 들이 적용된 Feign Client 인스턴스를 생성하는 과정이다.
+    // (Resilience4j 라이브러리 내부 구현을 살펴보니 실제로는 reflection 을 사용하는 것 같았다. .target(...)메서드를 자세히 보자. )
     @Bean
 //    fun naverNewsSearchCircuitBreaker(): CircuitBreaker {
     fun naverNewsSearchCircuitBreaker(): NaverNewsSearchClient {
@@ -71,14 +81,11 @@ class NaverNewsSearchCircuitConfig (
                 .of(circuitBreakerConfig)
                 .circuitBreaker("naverNewsSearch", circuitBreakerConfig)
 
-        // 단순 CircuitBreaker만 리턴할 것이라면 아래와 같이 return naverNewsCircuitBreaker 를 해주자.
-        // return naverNewsCircuitBreaker
-
         // 3) RateLimiter
-        // RateLimiter 의 default 설정
+        // 3-1) RateLimiter 의 default 설정
         // val rateLimiter: RateLimiter = RateLimiter.ofDefaults("naverNewsSearch")
 
-        // RateLimiter 커스텀 설정
+        // 3-2) RateLimiter 커스텀 설정
         // 참고) https://resilience4j.readme.io/docs/ratelimiter
         val naverNewsRateLimiter: RateLimiter = naverNewsSearchRateLimiter()
 
@@ -111,23 +118,6 @@ class NaverNewsSearchCircuitConfig (
                 .target(NaverNewsSearchClient::class.java, "http://naver.com")
 
         return client
-    }
-
-    // 3) RateLimiter
-    // 참고자료 : https://resilience4j.readme.io/docs/ratelimiter
-    fun naverNewsSearchRateLimiter(): RateLimiter {
-
-        // ofDefaults를 사용하지 않고 커스텀 설정을 할 경우에 대한 예.
-        val rateLimiterConfig: RateLimiterConfig = RateLimiterConfig.custom()
-                .limitRefreshPeriod(Duration.ofMillis(1L))
-                .limitForPeriod(10)
-                .timeoutDuration(Duration.ofMillis(25L))
-                .build()
-
-        val rateLimiter: RateLimiter = RateLimiterRegistry.of(rateLimiterConfig)
-                .rateLimiter("naverNewsSearchRateLimiter", rateLimiterConfig)
-
-        return rateLimiter
     }
 
 //    TODO : loadbalancer 설정 추가 후 연동 필요
