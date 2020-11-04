@@ -1,9 +1,6 @@
 package io.chart.lognomy.newsapi.naver
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonRootName
 
 class NaverNewsListDto (
         @JsonProperty("lastBuildDate") val lastBuildDate: String,

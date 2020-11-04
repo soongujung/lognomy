@@ -4,9 +4,6 @@ package io.chart.lognomy.newsapi.naver
 import feign.Headers
 import feign.Param
 import feign.RequestLine
-import io.chart.lognomy.config.circuitbreaker.newsapi.NaverNewsSearchHeaderConfig
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
