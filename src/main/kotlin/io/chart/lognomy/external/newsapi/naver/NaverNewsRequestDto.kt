@@ -1,4 +1,4 @@
-package io.chart.lognomy.newsapi.naver
+package io.chart.lognomy.external.newsapi.naver
 
 import feign.Param
 

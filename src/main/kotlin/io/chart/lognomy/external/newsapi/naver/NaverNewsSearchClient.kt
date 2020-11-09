@@ -1,9 +1,10 @@
-package io.chart.lognomy.newsapi.naver
+package io.chart.lognomy.external.newsapi.naver
 
 
 import feign.Headers
 import feign.Param
 import feign.RequestLine
+import io.chart.lognomy.external.newsapi.naver.NaverNewsListDto
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 

@@ -1,12 +1,12 @@
-package io.chart.lognomy.indicators.kospi
+package io.chart.lognomy.trending.kospi
 
 import org.springframework.stereotype.Service
 
 @Service
-class KospiService (
+class KospiServiceImpl (
         val kospiRepository: KospiRepository
-){
-    public fun findAll(): List<Kospi> {
+) : KospiService{
+    public override fun findAll(): List<Kospi> {
         return kospiRepository.findAllBy().toList()
     }
 }

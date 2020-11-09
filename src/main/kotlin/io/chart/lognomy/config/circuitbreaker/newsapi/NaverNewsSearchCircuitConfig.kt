@@ -5,7 +5,7 @@ import feign.Logger
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
 import feign.slf4j.Slf4jLogger
-import io.chart.lognomy.newsapi.naver.NaverNewsSearchClient
+import io.chart.lognomy.external.newsapi.naver.NaverNewsSearchClient
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry

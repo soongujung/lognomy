@@ -1,4 +1,4 @@
-package io.chart.lognomy.indicators.kospi
+package io.chart.lognomy.trending.kospi
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 class KospiTest {
 
-    lateinit var kospiService: KospiService
+    lateinit var kospiServiceImpl: KospiServiceImpl
 
     @Qualifier("kospiRepository")
     @Autowired
@@ -18,13 +18,13 @@ class KospiTest {
 
     @BeforeEach
     fun setup() : Unit{
-        kospiService = KospiService(kospiRepository)
+        kospiServiceImpl = KospiServiceImpl(kospiRepository)
     }
 
     @Test
     @DisplayName("findAll")
     fun testFindAll() : Unit{
-        val findAll = kospiService.findAll()
+        val findAll = kospiServiceImpl.findAll()
         println(findAll)
     }
 }
