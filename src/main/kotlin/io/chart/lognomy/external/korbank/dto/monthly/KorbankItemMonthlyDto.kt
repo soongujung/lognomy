@@ -3,20 +3,19 @@ package io.chart.lognomy.external.korbank.dto.monthly
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class KorbankItemMonthlyDto (
-        @JsonProperty("UNIT_NAME") val unitName : String,
         @JsonProperty("STAT_NAME") val statDesc : String,
-        @JsonProperty("STAT_CODE") val statCode : String,
+        @JsonProperty("STAT_CODE") val topCategory : String,
+        @JsonProperty("ITEM_CODE1") val midCategory : String,
+        @JsonProperty("ITEM_NAME1") val dataName : String,
+        @JsonProperty("DATA_VALUE") val dataValue : Double,
+        @JsonProperty("TIME") val dateTime : String,
 
-        @JsonProperty("ITEM_CODE1") val itemCode1 : String,
+        //-- 삭제 예정
+        @JsonProperty("UNIT_NAME") val unitName : String,
         @JsonProperty("ITEM_CODE2") val itemCode2 : String,
         @JsonProperty("ITEM_CODE3") val itemCode3 : String,
-
-        @JsonProperty("ITEM_NAME1") val itemName1 : String,
         @JsonProperty("ITEM_NAME2") val itemName2 : String,
         @JsonProperty("ITEM_NAME3") val itemName3 : String,
-
-        @JsonProperty("DATA_VALUE") val dataValue : Double,
-        @JsonProperty("TIME") val time : String
 ){
     /**
      * time 필드의 데이터 타입을 변환(String -> LocalDate) 하는 데에 문제가 있다.
