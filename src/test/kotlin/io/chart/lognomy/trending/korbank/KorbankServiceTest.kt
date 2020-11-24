@@ -1,4 +1,4 @@
-package io.chart.lognomy.trending.kospi
+package io.chart.lognomy.trending.korbank
 
 
 import io.chart.lognomy.external.korbank.KorbankSearchService
