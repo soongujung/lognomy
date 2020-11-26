@@ -12,8 +12,8 @@ import java.time.LocalDateTime
 
 // TODO::
 //  Feign 으로 부터 받아오는 문자열 숫자 데이터를 숫자 자료형(Double)으로 변환하는 공통 기능 필요
-@Document(indexName = "financial_yy", createIndex = false)
-data class FinancialYY (
+@Document(indexName = "financial_quarterly", createIndex = false)
+data class FinancialQuarterly (
 
         @Id @Field(name = "stock_code") val stockCode : String,
         @Field(name = "base_date", type = FieldType.Date, pattern = "yyyy-MM-dd'T'hh:mm:ss", format = DateFormat.date_hour_minute_second)
