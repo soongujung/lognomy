@@ -2,6 +2,7 @@ package io.chart.lognomy.config
 
 import org.apache.http.Header
 import org.apache.http.message.BasicHeader
+import org.elasticsearch.client.RestClient
 import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.beans.factory.annotation.Value
 
@@ -15,6 +16,11 @@ import org.springframework.http.HttpHeaders
 import java.time.Duration
 import java.util.*
 
+/**
+ * 일반적인 ElasticsearchClient 설정
+ * AmazonElasticsearch 에 대한 설정은 따로 구현
+ */
+
 /*
     TODO 정리 필요
     cluster name 을 얻어오는 방식은 https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html 에 자세히 설명되어 있다.
@@ -22,11 +28,11 @@ import java.util.*
  */
 
 //@EnableElasticsearchRepositories
-@Configuration
+//@Configuration
 class ElasticsearchClientConfig (
         @Value("\${conn.elasticsearch.host}") val host: String,
         @Value("\${conn.elasticsearch.port}") val port: String,
-        @Value("\${conn.elasticsearch.cluster_name}") val clusterName: String,
+//        @Value("\${conn.elasticsearch.cluster_name}") val clusterName: String,
         @Value("\${conn.elasticsearch.username}") val username: String,
         @Value("\${conn.elasticsearch.password}") val password: String
 ) : AbstractElasticsearchConfiguration() {
@@ -36,6 +42,7 @@ class ElasticsearchClientConfig (
     @Bean
     override fun elasticsearchClient(): RestHighLevelClient {
         val hostAndPort = "$host:$port"
+//        val hostAndPort = "$host"
 
         // java.net.UnknownHostException elasticsearch 검색내용
         // https://discuss.elastic.co/t/java-net-unknownhostexception-using-java-rest-client-5-6-3/106329/17

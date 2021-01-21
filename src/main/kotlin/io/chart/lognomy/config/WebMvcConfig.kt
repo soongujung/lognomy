@@ -15,6 +15,8 @@ class WebMvcConfig : WebMvcConfigurer{
                         "http://localhost:9090", // vue.js running port
                         "http://localhost:3000"  // react running port
                 )
+                .allowedMethods("*")
+                .allowCredentials(true)
     }
 
     override fun addInterceptors(registry: InterceptorRegistry) {
