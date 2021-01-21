@@ -62,6 +62,11 @@ dependencies {
     // spring-cloud-starter가 현재 프로젝트가 기본으로 netflix Feign 을 사용하는 것으로 오해를 하기 때문인것 같다.
 //    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:1.0.4.RELEASE")
 
+    // -- Amazon Elasticsearch
+    implementation("com.amazonaws:aws-java-sdk-core:1.11.926")
+    // -- AWS Lambda Java Core
+    implementation("com.amazonaws:aws-lambda-java-core:1.2.1")
+
     kapt("com.querydsl:querydsl-apt:4.2.2:jpa")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
